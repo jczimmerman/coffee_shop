@@ -1,3 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+import 'admin_home.dart';
 import 'home.dart';
 import 'register.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +71,18 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+    Map<String, Object> checkUserType(String user) {
+      DocumentReference ref = FirebaseFirestore.instance.collection('users').doc(user);
+      Map<String, Object> userType;
+      final userRole = ref.get().then(
+        (docSnap) => userType = docSnap.data()
+      );
+
+      return userType;
+
+    }
+    
+    
     //errors for signing in
     String printError(FirebaseAuthException e) {
       if (e.code == 'weak-password') {
@@ -89,6 +105,10 @@ class _LoginPageState extends State<LoginPage> {
       try {
         UserCredential userCredential =
         await auth.signInWithEmailAndPassword(email: email, password: password);
+
+
+
+        //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminHomePage()));
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
         return true;
       } on FirebaseAuthException catch (e) {
