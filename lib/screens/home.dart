@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'login.dart';
+final firestoreInstance = FirebaseFirestore.instance;
 
 class HomePage extends StatelessWidget {
   final auth = FirebaseAuth.instance;
@@ -188,11 +190,14 @@ class HomePage extends StatelessWidget {
             ),
           ),
           Center(
-            child: Text(
+            child:
+
+            Text(
                 'Menu',
               style: TextStyle(
                 fontSize: 20.0
               ),
+
             ),
           ),
           Container(
@@ -233,8 +238,21 @@ class HomePage extends StatelessWidget {
                   height: 50,
                   color: Colors.grey,
                 ),
+                TextButton(
+                  onPressed: (){
+                    firestoreInstance.collection("coffee_menu").get().then((querySnapshot) {
+                      querySnapshot.docs.forEach((result) {
+                        print(result.data());
+                      });
+                    });
+                  },
+                  child: Text(
+                      "Get the coffee Menu"
+                  ),
+                ),
               ],
             ),
+
           )
         ],
       ),
