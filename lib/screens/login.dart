@@ -103,14 +103,24 @@ class _LoginPageState extends State<LoginPage> {
     //checks if login is successful
     Future<bool> firebaseSignIn(String email, String password) async {
       try {
+
         UserCredential userCredential =
-        await auth.signInWithEmailAndPassword(email: email, password: password);
-
-
-
-        //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminHomePage()));
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
+        await auth.signInWithEmailAndPassword(email: email, password: password)
+        .then( (result) {
+          FirebaseFirestore.instance.collection('users').doc(email).get()
+            .then( (value) {
+              var userType = value.data()['role'];
+              if (userType == 'admin') {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminHomePage()));
+              }
+              else if (userType == 'customer') {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
+              }
+          });
+          return;
+        });
         return true;
+
       } on FirebaseAuthException catch (e) {
         _error = printError(e);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(_error)));
