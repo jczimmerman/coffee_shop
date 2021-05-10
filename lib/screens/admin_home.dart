@@ -3,6 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'login.dart';
 
+import 'inventory_management.dart';
+import 'price_management.dart';
+import 'item_management.dart';
+
 class AdminHomePage extends StatelessWidget {
   final auth = FirebaseAuth.instance;
 
@@ -44,45 +48,69 @@ class AdminHomePage extends StatelessWidget {
           ),
           Column(
             children: [
-              Container(
-                margin: EdgeInsets.only(top: 20, bottom: 20, left: 30, right: 30),
-                height: 70,
-                alignment: Alignment.center,
-                color: Colors.blue,
-                child: Text(
-                  'Inventory Management',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.white
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => InventoryPage())
+                  );
+                },
+                child: Container(
+                  margin: EdgeInsets.only(top: 20, bottom: 20, left: 30, right: 30),
+                  height: 70,
+                  alignment: Alignment.center,
+                  color: Colors.blue,
+                  child: Text(
+                    'Inventory Management',
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.white
+                    ),
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(top: 20, bottom: 20, left: 30, right: 30),
-                height: 70,
-                alignment: Alignment.center,
-                color: Colors.blue,
-                child: Text(
-                  'Price Management',
-                  style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.white
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PricePage())
+                  );
+                },
+                child: Container(
+                  margin: EdgeInsets.only(top: 20, bottom: 20, left: 30, right: 30),
+                  height: 70,
+                  alignment: Alignment.center,
+                  color: Colors.blue,
+                  child: Text(
+                    'Price Management',
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.white
+                    ),
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(top: 20, bottom: 20, left: 30, right: 30),
-                height: 70,
-                alignment: Alignment.center,
-                color: Colors.blue,
-                child: Text(
-                  'Item Management',
-                  style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.white
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ItemPage())
+                  );
+                },
+                child: Container(
+                  margin: EdgeInsets.only(top: 20, bottom: 20, left: 30, right: 30),
+                  height: 70,
+                  alignment: Alignment.center,
+                  color: Colors.blue,
+                  child: Text(
+                    'Item Management',
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.white
+                    ),
                   ),
-                ),
-              )
+                )
+              ),
             ],
           )
         ],
