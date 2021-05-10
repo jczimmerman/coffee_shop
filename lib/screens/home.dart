@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'login.dart';
+import 'menus/coffee_menu.dart';
+import 'menus/tea_menu.dart';
+final firestoreInstance = FirebaseFirestore.instance;
 
 class HomePage extends StatelessWidget {
   final auth = FirebaseAuth.instance;
@@ -188,11 +192,14 @@ class HomePage extends StatelessWidget {
             ),
           ),
           Center(
-            child: Text(
+            child:
+
+            Text(
                 'Menu',
               style: TextStyle(
                 fontSize: 20.0
               ),
+
             ),
           ),
           Container(
@@ -204,7 +211,13 @@ class HomePage extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.all(10),
                   child: Center(
-                    child: Text('Coffee'),
+
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pushReplacement((MaterialPageRoute(builder: (context) => CoffeeMenu())));
+                        },
+                        child: Text('Coffee')
+                    ),
                   ),
                   height: 50,
                   color: Colors.amber,
@@ -212,7 +225,12 @@ class HomePage extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.all(10),
                   child: Center(
-                    child: Text('Tea'),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pushReplacement((MaterialPageRoute(builder: (context) => TeaMenu())));
+                        },
+                        child: Text('Coffee')
+                    ),
                   ),
                   height: 50,
                   color: Colors.grey,
@@ -233,8 +251,21 @@ class HomePage extends StatelessWidget {
                   height: 50,
                   color: Colors.grey,
                 ),
+                TextButton(
+                  onPressed: (){
+                    firestoreInstance.collection("coffee_menu").get().then((querySnapshot) {
+                      querySnapshot.docs.forEach((result) {
+                        print(result.data()['name']);
+                      });
+                    });
+                  },
+                  child: Text(
+                      "Get the coffee Menu"
+                  ),
+                ),
               ],
             ),
+
           )
         ],
       ),
