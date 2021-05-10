@@ -229,7 +229,7 @@ class HomePage extends StatelessWidget {
                         onPressed: () {
                           Navigator.of(context).pushReplacement((MaterialPageRoute(builder: (context) => TeaMenu())));
                         },
-                        child: Text('Coffee')
+                        child: Text('Tea')
                     ),
                   ),
                   height: 50,
@@ -299,7 +299,7 @@ class HomePage extends StatelessWidget {
             ListTile(
               title: Text('Cart'),
               onTap: () {
-                auth.signOut();
+                Navigator.pushNamed(context, '/items');
                 //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
               },
             ),
