@@ -50,6 +50,7 @@ class _CartItemsState extends State<CartItems> {
   final email;
   _CartItemsState(this.email);
   int _total = 0;
+  bool first = true;
 
   Color color = Colors.white;
 
@@ -71,7 +72,10 @@ class _CartItemsState extends State<CartItems> {
                       shrinkWrap: true,
                       itemCount: snapshot.data.length,
                       itemBuilder: (_, index) {
-                        _total += snapshot.data[index]['price'];
+                        if (first == true) {
+                          first = false;
+                          _total += snapshot.data[index]['price'];
+                        }
                         return Container(
                           child: Row(
                             children: [
