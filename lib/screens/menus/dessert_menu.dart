@@ -101,7 +101,10 @@ class ListPage extends StatelessWidget {
                                           await FirebaseFirestore.instance.collection('carts').doc(email).collection('items').doc(snapshot.data[index]["name"])
                                               .set({
                                             'amount': FieldValue.increment(1),
-                                            'price': FieldValue.increment(snapshot.data[index]["price"])
+                                            'price': FieldValue.increment(snapshot.data[index]["price"]),
+                                            'name' : snapshot.data[index]["name"],
+                                            'picture' : snapshot.data[index]["picture"],
+                                            'description' : snapshot.data[index]['description']
                                           })
                                               .then( (val) => print('Successfully edited stock.'))
                                               .catchError( (error) => print('Error: $error'))
