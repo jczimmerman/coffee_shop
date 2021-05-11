@@ -73,10 +73,12 @@ class ListPage extends StatelessWidget {
                         //have to align them correctly but also have to make all the other menus
                         //and link them to a cart page
                         child: ListTile(
-                          leading: Image.asset(snapshot.data[index]["picture"]),
-                          title: Text(snapshot.data[index]["name"]),
+                          leading: Image.network(snapshot.data[index]["picture"]),
                           subtitle: Column(
                               children: <Widget> [
+                                Container(
+                                  child: Text(snapshot.data[index]["name"]),
+                                ),
                                 Container(
                                     child: Text(snapshot.data[index]["description"])
                                 ),
