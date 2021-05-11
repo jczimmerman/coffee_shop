@@ -9,6 +9,9 @@ import 'item_management.dart';
 
 class AdminHomePage extends StatelessWidget {
   final auth = FirebaseAuth.instance;
+  final email;
+
+  AdminHomePage({key, this.email}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,7 @@ class AdminHomePage extends StatelessWidget {
             );
           },
         ),
-        title: Text('Admin'),
+        title: Text(email),
         actions: [
           IconButton(
               icon: Icon(

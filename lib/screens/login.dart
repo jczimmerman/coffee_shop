@@ -111,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
             .then( (value) {
               var userType = value.data()['role'];
               if (userType == 'admin') {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminHomePage()));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminHomePage(email: email)));
               }
               else if (userType == 'customer') {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
