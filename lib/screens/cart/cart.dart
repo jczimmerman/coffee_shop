@@ -3,13 +3,21 @@ import 'package:coffee_shop/screens/menus/coffee_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:coffee_shop/screens/home.dart';
+import 'package:coffee_shop/screens/menus/coffee_menu.dart';
+
+class Cart extends StatefulWidget {
 
 
+  Cart({this.cartItems});
+  final List<List> cartItems;
 
-class Cart extends StatelessWidget {
 
+  @override
+  _CartState createState() => _CartState();
+}
 
-
+class _CartState extends State<Cart> {
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +34,23 @@ class Cart extends StatelessWidget {
           ),
         ],
       ),
+      body: new ListView.builder(
+        itemCount: widget.cartItems.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+            child: Card(
+              child: ListTile(
+                leading: Image.asset('assets/images/bean_heart.jpg'),
+                title: Text(widget.cartItems[index])
+
+              )
+            )
+          );
+        }
+      )
+
+
+
 
 
     );

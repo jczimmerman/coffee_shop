@@ -9,8 +9,9 @@ import 'cart/cart.dart';
 final firestoreInstance = FirebaseFirestore.instance;
 
 class HomePage extends StatefulWidget {
-  final List<String> cartItems;
+  final List<List> cartItems;
   HomePage({Key key, this.cartItems});
+
 
 
   @override
@@ -21,7 +22,7 @@ class HomePage extends StatefulWidget {
 }
 class _HomePageState extends State<HomePage> {
   final auth = FirebaseAuth.instance;
-  List<String> cartItems = <String>[];
+  List<List> cartItems = <List>[];
   // ignore: deprecated_member_use
 
 
@@ -36,11 +37,7 @@ class _HomePageState extends State<HomePage> {
           child: IconButton(
             icon: Icon(Icons.shopping_cart_outlined),
               onPressed: () {
-                Navigator.push( context,
-                  MaterialPageRoute(
-                    builder: (context) => Cart(),
-                  ),
-                );
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Cart(cartItems: cartItems)));
               }
           )
           ),
@@ -286,14 +283,10 @@ class _HomePageState extends State<HomePage> {
                 ),
                 TextButton(
                   onPressed: (){
-                    firestoreInstance.collection("coffee_menu").get().then((querySnapshot) {
-                      querySnapshot.docs.forEach((result) {
-                        print(result.data()['name']);
-                      });
-                    });
+                    print(cartItems);
                   },
                   child: Text(
-                      "Get the coffee Menu"
+                      "Get the cartlist"
                   ),
                 ),
               ],

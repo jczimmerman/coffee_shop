@@ -1,5 +1,5 @@
 
-
+import 'package:coffee_shop/screens/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,11 +11,17 @@ class CoffeeItem {
   final num stock;
   final num price;
   CoffeeItem(this.name, this.stock, this.price);
+
+  @override
+  List toString() {
+    return '{ ${this.name}, ${this.stock}, ${this.price} }';
+  }
 }
 
 class CoffeeMenu extends StatefulWidget {
-  final List<String> cartItems;
+
 CoffeeMenu({this.cartItems});
+final List<List> cartItems;
 
 
   @override
@@ -24,17 +30,13 @@ CoffeeMenu({this.cartItems});
 
 class _CoffeeMenuState extends State<CoffeeMenu> {
 
+
+
   Future getPosts() async {
     var firestoreInstance = FirebaseFirestore.instance;
     QuerySnapshot qn = await firestoreInstance.collection("coffee_menu").get();
     return qn.docs;
   }
-
-  //navigateToDetail(DocumentSnapshot post){
-  //Navigator.push(context, MaterialPageRoute(builder: (context) => DetailPage(post: post)));
-  //}
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -83,12 +85,17 @@ class _CoffeeMenuState extends State<CoffeeMenu> {
                                     child: TextButton(
                                       child: Text("Add to Cart"),
                                       onPressed: () {
+                                        var name = snapshot.data[index]["name"];
+                                        var stock = snapshot.data[index]["stock"];
+                                        var price = snapshot.data[index]["price"];
+                                        var item = CoffeeItem(name, stock, price);
+                                         print(CoffeeItem(name, stock, price));
                                         setState(() {
-                                          if (!cartItems.contains(item))
-                                            cartItems.add(item);
-                                          else
-                                            cartItems.remove(item);
+                                          widget.cartItems.add(item.toString());
                                         });
+                                        print(widget.cartItems);
+
+
                                       },
 
                                     )
@@ -115,9 +122,11 @@ class _CoffeeMenuState extends State<CoffeeMenu> {
     );
 
   }
-
-
-
+   /*void addItemToList(){
+     setState(() {
+       widget.cartItems.add(snapshot.data[index]["name"]);
+     });
+   }*/
 
 }
 
