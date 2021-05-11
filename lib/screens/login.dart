@@ -121,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
               }
               else if (userType == 'customer') {
 
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage(email: email)));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
               }
           });
           return;

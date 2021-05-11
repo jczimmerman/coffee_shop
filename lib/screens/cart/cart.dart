@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 
 
 class Cart extends StatelessWidget {
-  final CoffeeItem coffeeItem;
 
-  Cart({Key key, this.coffeeItem}) : super(key: key);
+
+
 
   Widget build(BuildContext context) {
     return Scaffold(

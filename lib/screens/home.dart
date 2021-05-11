@@ -8,11 +8,22 @@ import 'menus/tea_menu.dart';
 import 'cart/cart.dart';
 final firestoreInstance = FirebaseFirestore.instance;
 
-class HomePage extends StatelessWidget {
-  HomePage({Key key, this.email}) : super(key: key);
-  final String email;
+class HomePage extends StatefulWidget {
+  final List<String> cartItems;
+  HomePage({Key key, this.cartItems});
 
+
+  @override
+  _HomePageState createState() => _HomePageState();
+//HomePage({Key key, this.email}) : super(key: key);
+//final String email;
+
+}
+class _HomePageState extends State<HomePage> {
   final auth = FirebaseAuth.instance;
+  List<String> cartItems = <String>[];
+  // ignore: deprecated_member_use
+
 
 
   @override
@@ -38,7 +49,7 @@ class HomePage extends StatelessWidget {
       body: Column(
         children: [
           Center(
-            child: Text(email),
+            child: Text('user'),
           ),
           Center(
             child: Text(
@@ -236,7 +247,7 @@ class HomePage extends StatelessWidget {
 
                     child: ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).pushReplacement((MaterialPageRoute(builder: (context) => CoffeeMenu())));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => CoffeeMenu(cartItems: cartItems)));
                         },
                         child: Text('Coffee')
                     ),
