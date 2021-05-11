@@ -1,9 +1,9 @@
-import 'package:coffee_shop/dataReference.dart';
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:coffee_shop/screens/cart/cart.dart';
 
 
 
@@ -26,6 +26,12 @@ class _CoffeeMenuState extends State<CoffeeMenu> {
   }
 }
 
+class CoffeeItem {
+  final String name;
+  final num stock;
+  final num price;
+  CoffeeItem(this.name, this.stock, this.price);
+}
 
 class ListPage extends StatefulWidget {
   @override
@@ -36,10 +42,8 @@ class _ListPageState extends State<ListPage> {
 
   Future getPosts() async {
     var firestoreInstance = FirebaseFirestore.instance;
-
     QuerySnapshot qn = await firestoreInstance.collection("coffee_menu").get();
       return qn.docs;
-
   }
 
   //navigateToDetail(DocumentSnapshot post){
@@ -63,7 +67,7 @@ class _ListPageState extends State<ListPage> {
                     return Container(
                       child: Card(
 
-//have to align them correctly but also have to make all the other menues
+//have to align them correctly but also have to make all the other menus
                       //and link them to a cart page
                       child: ListTile(
                         leading: Image.asset(snapshot.data[index]["picture"]),
@@ -82,7 +86,9 @@ class _ListPageState extends State<ListPage> {
                             Container(
                                 child: TextButton(
                                   child: Text("Add to Cart"),
-                                  onPressed: () {},
+                                  onPressed: ()  {
+                                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Cart(coffeeItem: new CoffeeItem(snapshot.data[index]["name"], snapshot.data[index]["price"], snapshot.data[index]["stock"]))));
+                                  },
 
                                   )
 

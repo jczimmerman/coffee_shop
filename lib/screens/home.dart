@@ -5,19 +5,41 @@ import 'package:flutter/material.dart';
 import 'login.dart';
 import 'menus/coffee_menu.dart';
 import 'menus/tea_menu.dart';
+import 'cart/cart.dart';
 final firestoreInstance = FirebaseFirestore.instance;
 
 class HomePage extends StatelessWidget {
+  HomePage({Key key, this.email}) : super(key: key);
+  final String email;
+
   final auth = FirebaseAuth.instance;
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
+        actions: [
+          Container(
+          child: IconButton(
+            icon: Icon(Icons.shopping_cart_outlined),
+              onPressed: () {
+                Navigator.push( context,
+                  MaterialPageRoute(
+                    builder: (context) => Cart(),
+                  ),
+                );
+              }
+          )
+          ),
+        ],
       ),
       body: Column(
         children: [
+          Center(
+            child: Text(email),
+          ),
           Center(
             child: Text(
               "Today's Favorites",

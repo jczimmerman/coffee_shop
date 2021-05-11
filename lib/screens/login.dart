@@ -12,6 +12,11 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
+class UserEmail {
+  final String email;
+  UserEmail(this.email);
+}
+
 class _LoginPageState extends State<LoginPage> {
   String _email, _password, _error;
   final auth = FirebaseAuth.instance;
@@ -111,10 +116,12 @@ class _LoginPageState extends State<LoginPage> {
             .then( (value) {
               var userType = value.data()['role'];
               if (userType == 'admin') {
+
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminHomePage()));
               }
               else if (userType == 'customer') {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
+
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage(email: email)));
               }
           });
           return;
