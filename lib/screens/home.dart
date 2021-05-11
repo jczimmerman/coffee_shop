@@ -22,6 +22,17 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                auth.signOut();
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
+              },
+            );
+          },
+        ),
         actions: [
           Container(
           child: IconButton(
@@ -39,9 +50,6 @@ class HomePage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Center(
-            child: Text(email),
-          ),
           Center(
             child: Text(
               "Today's Favorites",
@@ -227,73 +235,93 @@ class HomePage extends StatelessWidget {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 30),
+            margin: EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
             child: new ListView(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               children: [
                 Container(
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.blue
+                  ),
                   margin: EdgeInsets.all(10),
                   child: Center(
-                    child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).push((MaterialPageRoute(builder: (context) => CoffeeMenu(email: email))));
-                        },
-                        child: Text('Coffee')
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push((MaterialPageRoute(builder: (context) => CoffeeMenu(email: email))));
+                      },
+                      child: Text(
+                        'Coffee',
+                        style: TextStyle(
+                          fontSize: 23,
+                          color: Colors.white
+                        ),
+                      ),
                     ),
                   ),
-                  height: 50,
-                  color: Colors.amber,
                 ),
                 Container(
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                  decoration: BoxDecoration(
+                      color: Colors.blue
+                  ),
                   margin: EdgeInsets.all(10),
                   child: Center(
-                    child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).push((MaterialPageRoute(builder: (context) => TeaMenu(email: email))));
-                        },
-                        child: Text('Tea')
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push((MaterialPageRoute(builder: (context) => TeaMenu(email: email))));
+                      },
+                      child: Text(
+                        'Tea',
+                        style: TextStyle(
+                            fontSize: 23,
+                            color: Colors.white
+                        ),
+                      ),
                     ),
                   ),
-                  height: 50,
-                  color: Colors.grey,
                 ),
                 Container(
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                  decoration: BoxDecoration(
+                      color: Colors.blue
+                  ),
                   margin: EdgeInsets.all(10),
                   child: Center(
-                    child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).push((MaterialPageRoute(builder: (context) => PastryMenu(email: email))));
-                        },
-                        child: Text('Pastries')
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push((MaterialPageRoute(builder: (context) => PastryMenu(email: email))));
+                      },
+                      child: Text(
+                        'Pastries',
+                        style: TextStyle(
+                            fontSize: 23,
+                            color: Colors.white
+                        ),
+                      ),
                     ),
                   ),
-                  height: 50,
-                  color: Colors.amber,
                 ),
                 Container(
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                  decoration: BoxDecoration(
+                      color: Colors.blue
+                  ),
                   margin: EdgeInsets.all(10),
                   child: Center(
-                    child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).push((MaterialPageRoute(builder: (context) => DessertMenu(email: email))));
-                        },
-                        child: Text('Dessert')
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push((MaterialPageRoute(builder: (context) => DessertMenu(email: email))));
+                      },
+                      child: Text(
+                        'Dessert',
+                        style: TextStyle(
+                            fontSize: 23,
+                            color: Colors.white
+                        ),
+                      ),
                     ),
-                  ),
-                  height: 50,
-                  color: Colors.grey,
-                ),
-                TextButton(
-                  onPressed: (){
-                    firestoreInstance.collection("coffee_menu").get().then((querySnapshot) {
-                      querySnapshot.docs.forEach((result) {
-                        print(result.data()['name']);
-                      });
-                    });
-                  },
-                  child: Text(
-                      "Get the coffee Menu"
                   ),
                 ),
               ],
@@ -301,57 +329,6 @@ class HomePage extends StatelessWidget {
 
           )
         ],
-      ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            Container(
-              child: DrawerHeader(
-                child: Text('User Actions'),
-                decoration: BoxDecoration(
-                  color: Colors.blue
-                ),
-              ),
-              margin: EdgeInsets.all(0),
-              padding: EdgeInsets.all(0),
-            ),
-            ListTile(
-              title: Text('Settings'),
-              onTap: () {
-                auth.signOut();
-                //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
-              },
-            ),
-            ListTile(
-              title: Text('Account'),
-              onTap: () {
-                auth.signOut();
-                //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
-              },
-            ),
-            ListTile(
-              title: Text('Cart'),
-              onTap: () {
-                Navigator.pushNamed(context, '/items');
-                //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
-              },
-            ),
-            ListTile(
-              title: Text('Payment Methods'),
-              onTap: () {
-                auth.signOut();
-                //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
-              },
-            ),
-            ListTile(
-              title: Text('Logout'),
-              onTap: () {
-                auth.signOut();
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
-              },
-            ),
-          ],
-        )
       ),
     );
   }
