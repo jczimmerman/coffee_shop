@@ -1,29 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:coffee_shop/screens/cart/cart.dart';
 
 
-
-class TeaMenu extends StatefulWidget {
+class DessertMenu extends StatefulWidget {
   final email;
 
-  const TeaMenu({Key key, this.email}) : super(key: key);
+  const DessertMenu({Key key, this.email}) : super(key: key);
 
 
   @override
-  _TeaMenuState createState() => _TeaMenuState(email);
+  _DessertMenuState createState() => _DessertMenuState(email);
 }
 
 
-class _TeaMenuState extends State<TeaMenu> {
+class _DessertMenuState extends State<DessertMenu> {
   final email;
-  _TeaMenuState(this.email);
+  _DessertMenuState(this.email);
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Tea Menu'),
+        title: new Text('Dessert Menu'),
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
@@ -40,7 +40,6 @@ class _TeaMenuState extends State<TeaMenu> {
   }
 }
 
-
 class ListPage extends StatelessWidget {
   final email;
 
@@ -49,7 +48,7 @@ class ListPage extends StatelessWidget {
 
   Future getPosts() async {
     var firestoreInstance = FirebaseFirestore.instance;
-    QuerySnapshot qn = await firestoreInstance.collection("tea_menu").get();
+    QuerySnapshot qn = await firestoreInstance.collection("dessert_menu").get();
     return qn.docs;
   }
 
@@ -96,15 +95,15 @@ class ListPage extends StatelessWidget {
                                           'amount': FieldValue.increment(1),
                                           'price': FieldValue.increment(snapshot.data[index]["price"])
                                         })
-                                            .then( (val) => print('Successfully added item to cart.'))
+                                            .then( (val) => print('Successfully edited stock.'))
                                             .catchError( (error) async => {
 
-                                              await FirebaseFirestore.instance.collection('carts').doc(email).collection('items').doc(snapshot.data[index]["name"])
-                                                  .set({
-                                                'amount': FieldValue.increment(1),
-                                                'price': FieldValue.increment(snapshot.data[index]["price"])
-                                              })
-                                              .then( (val) => print('Successfully created new item in cart.'))
+                                          await FirebaseFirestore.instance.collection('carts').doc(email).collection('items').doc(snapshot.data[index]["name"])
+                                              .set({
+                                            'amount': FieldValue.increment(1),
+                                            'price': FieldValue.increment(snapshot.data[index]["price"])
+                                          })
+                                              .then( (val) => print('Successfully edited stock.'))
                                               .catchError( (error) => print('Error: $error'))
 
                                         });
@@ -123,3 +122,5 @@ class ListPage extends StatelessWidget {
     );
   }
 }
+
+

@@ -1,54 +1,56 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_shop/screens/cart/cart.dart';
 
 
-
 class CoffeeMenu extends StatefulWidget {
+  final email;
+
+  const CoffeeMenu({Key key, this.email}) : super(key: key);
+
 
   @override
-  _CoffeeMenuState createState() => _CoffeeMenuState();
+  _CoffeeMenuState createState() => _CoffeeMenuState(email);
 }
 
 
 class _CoffeeMenuState extends State<CoffeeMenu> {
+  final email;
+  _CoffeeMenuState(this.email);
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('Coffee Menu'),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            );
+          },
+        ),
       ),
-          body: ListPage(),
+      body: ListPage(email: email),
     );
   }
 }
 
-class CoffeeItem {
-  final String name;
-  final num stock;
-  final num price;
-  CoffeeItem(this.name, this.stock, this.price);
-}
+class ListPage extends StatelessWidget {
+  final email;
 
-class ListPage extends StatefulWidget {
-  @override
-  _ListPageState createState() => _ListPageState();
-}
+  const ListPage({Key key, this.email}) : super(key: key);
 
-class _ListPageState extends State<ListPage> {
 
   Future getPosts() async {
     var firestoreInstance = FirebaseFirestore.instance;
     QuerySnapshot qn = await firestoreInstance.collection("coffee_menu").get();
-      return qn.docs;
+    return qn.docs;
   }
-
-  //navigateToDetail(DocumentSnapshot post){
-    //Navigator.push(context, MaterialPageRoute(builder: (context) => DetailPage(post: post)));
-  //}
 
   @override
   Widget build(BuildContext context) {
@@ -67,75 +69,58 @@ class _ListPageState extends State<ListPage> {
                     return Container(
                       child: Card(
 
-//have to align them correctly but also have to make all the other menus
-                      //and link them to a cart page
-                      child: ListTile(
-                        leading: Image.asset(snapshot.data[index]["picture"]),
-                        title: Text(snapshot.data[index]["name"]),
-                        subtitle: Column(
-                          children: <Widget> [
-                            Container(
-                               child: Text(snapshot.data[index]["description"])
-                            ),
-                            Container(
-                                child: Text('Price: ' + "\$" +(snapshot.data[index]["price"]).toString())
-                            ),
-                            Container(
-                                child: Text('Stock: ' + (snapshot.data[index]["stock"]).toString())
-                            ),
-                            Container(
-                                child: TextButton(
-                                  child: Text("Add to Cart"),
-                                  onPressed: ()  {
-                                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Cart(coffeeItem: new CoffeeItem(snapshot.data[index]["name"], snapshot.data[index]["price"], snapshot.data[index]["stock"]))));
-                                  },
-
-                                  )
-
-
+                        //have to align them correctly but also have to make all the other menus
+                        //and link them to a cart page
+                        child: ListTile(
+                          leading: Image.asset(snapshot.data[index]["picture"]),
+                          title: Text(snapshot.data[index]["name"]),
+                          subtitle: Column(
+                              children: <Widget> [
+                                Container(
+                                    child: Text(snapshot.data[index]["description"])
                                 ),
+                                Container(
+                                    child: Text('Price: ' + "\$" +(snapshot.data[index]["price"]).toString())
+                                ),
+                                Container(
+                                    child: Text('Stock: ' + (snapshot.data[index]["stock"]).toString())
+                                ),
+                                Container(
+                                    child: TextButton(
+                                      child: Text("Add to Cart"),
+                                      onPressed: () async {
 
-                      ]
-                              ),
+                                        await FirebaseFirestore.instance.collection('carts').doc(email).collection('items').doc(snapshot.data[index]["name"])
+                                            .update({
+                                          'amount': FieldValue.increment(1),
+                                          'price': FieldValue.increment(snapshot.data[index]["price"])
+                                        })
+                                            .then( (val) => print('Successfully edited stock.'))
+                                            .catchError( (error) async => {
 
-                            ),
+                                              await FirebaseFirestore.instance.collection('carts').doc(email).collection('items').doc(snapshot.data[index]["name"])
+                                                  .set({
+                                              'amount': FieldValue.increment(1),
+                                              'price': FieldValue.increment(snapshot.data[index]["price"])
+                                              })
+                                              .then( (val) => print('Successfully edited stock.'))
+                                              .catchError( (error) => print('Error: $error'))
 
+                                        });
 
-
+                                      },
+                                    )
+                                ),
+                              ]
+                          ),
                         ),
-
-
-                      );
+                      ),
+                    );
                   });
             }
           }),
     );
   }
-  }
-
-/*
-class DetailPage extends StatefulWidget {
-
-  final DocumentSnapshot post;
-
-  DetailPage({this.post});
-
-  @override
-  _DetailPageState createState() => _DetailPageState();
 }
 
-class _DetailPageState extends State<DetailPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Card(
-        child: ListTile(
-          title: Text(widget.post["title"]),
-          subtitle: Text(widget.post["description"]),
-        )
-      )
-    );
-  }
-}
 
-*/

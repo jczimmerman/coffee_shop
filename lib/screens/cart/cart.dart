@@ -7,9 +7,6 @@ import 'package:flutter/material.dart';
 
 
 class Cart extends StatelessWidget {
-  final CoffeeItem coffeeItem;
-
-  Cart({Key key, this.coffeeItem}) : super(key: key);
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,17 +14,15 @@ class Cart extends StatelessWidget {
         title: Text('Cart'),
         actions: [
           Container(
-              child: IconButton(
-                  icon: Icon(Icons.shopping_cart_outlined),
-                  onPressed: () {}
+            child: IconButton(
+                icon: Icon(Icons.shopping_cart_outlined),
+                onPressed: () {
 
-
-              )
+                }
+            )
           ),
         ],
       ),
-
-
     );
   }
 }

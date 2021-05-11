@@ -180,8 +180,8 @@ class _CoffeeMenuState extends State<CoffeeMenu> {
                                               .update({
                                             'stock': _stock
                                           })
-                                              .then( (val) => print('Successfully edited stock.'))
-                                              .catchError( (error) => 'Error: $error');
+                                          .then( (val) => print('Successfully edited stock.'))
+                                          .catchError( (error) => 'Error: $error');
 
                                           //set state
                                           setState(() {});

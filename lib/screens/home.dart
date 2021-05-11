@@ -6,6 +6,8 @@ import 'login.dart';
 import 'menus/coffee_menu.dart';
 import 'menus/tea_menu.dart';
 import 'cart/cart.dart';
+import 'menus/pastry_menu.dart';
+import 'menus/dessert_menu.dart';
 final firestoreInstance = FirebaseFirestore.instance;
 
 class HomePage extends StatelessWidget {
@@ -233,10 +235,9 @@ class HomePage extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.all(10),
                   child: Center(
-
                     child: ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).pushReplacement((MaterialPageRoute(builder: (context) => CoffeeMenu())));
+                          Navigator.of(context).push((MaterialPageRoute(builder: (context) => CoffeeMenu(email: email))));
                         },
                         child: Text('Coffee')
                     ),
@@ -249,7 +250,7 @@ class HomePage extends StatelessWidget {
                   child: Center(
                     child: ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).pushReplacement((MaterialPageRoute(builder: (context) => TeaMenu())));
+                          Navigator.of(context).push((MaterialPageRoute(builder: (context) => TeaMenu(email: email))));
                         },
                         child: Text('Tea')
                     ),
@@ -260,7 +261,12 @@ class HomePage extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.all(10),
                   child: Center(
-                    child: Text('Pastries'),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).push((MaterialPageRoute(builder: (context) => PastryMenu(email: email))));
+                        },
+                        child: Text('Pastries')
+                    ),
                   ),
                   height: 50,
                   color: Colors.amber,
@@ -268,7 +274,12 @@ class HomePage extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.all(10),
                   child: Center(
-                    child: Text('Desserts'),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).push((MaterialPageRoute(builder: (context) => DessertMenu(email: email))));
+                        },
+                        child: Text('Dessert')
+                    ),
                   ),
                   height: 50,
                   color: Colors.grey,
