@@ -77,7 +77,10 @@ class ListPage extends StatelessWidget {
                           subtitle: Column(
                               children: <Widget> [
                                 Container(
-                                  child: Text(snapshot.data[index]["name"]),
+                                  child: Text(snapshot.data[index]["name"],
+                                  style: TextStyle(fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                  ),
                                 ),
                                 Container(
                                     child: Text(snapshot.data[index]["description"])
