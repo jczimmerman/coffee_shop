@@ -158,6 +158,23 @@ class _CartItemsState extends State<CartItems> {
                     ],
                   ),
                   Container(
+                    decoration: BoxDecoration(
+                      color: Colors.blue
+                    ),
+                    child: GestureDetector(
+                      onTap: (){
+                        setState(() {});
+                      },
+                      child: Text(
+                        'Update Price',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
                     margin: EdgeInsets.only(top: 20, bottom: 20 ),
                     padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
                     decoration: BoxDecoration(
